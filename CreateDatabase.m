@@ -12,13 +12,9 @@ function T = CreateDatabase(TrainDatabasePath)
 %
 % Returns:      T                      - A 2D matrix, containing all 1D image vectors.
 %                                        The length of 1D column vectors is MN and 'T' will be a MNxP 2D matrix.
-%
-% See also: STRCMP, STRCAT, RESHAPE
+%               
 
-% Original version by Amir Hossein Omidvarnia, October 2007
-%                     Email: aomidvar@ece.ut.ac.ir                  
 
-%%%%%%%%%%%%%%%%%%%%%%%% File management
 TrainFiles = dir(TrainDatabasePath);
 Train_Number = 0;
 
@@ -32,8 +28,6 @@ end
 T = [];
 for i = 1 : Train_Number
     
-    % I have chosen the name of each image in databases as a corresponding
-    % number. However, it is not mandatory!
     str = int2str(i);
     str = strcat('\',str,'.jpg');
     str = strcat(TrainDatabasePath,str);
@@ -44,7 +38,7 @@ for i = 1 : Train_Number
     [irow icol] = size(img);
    
     temp = reshape(img',irow*icol,1);   % Reshaping 2D images into 1D image vectors
-    T = [T temp]; % 'T' grows after each turn                    
+    T = [T temp];                  
 end
 
 T = double(T);
