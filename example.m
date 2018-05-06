@@ -1,10 +1,7 @@
 % A sample script, which shows the usage of functions, included in
 % FLD-based face recognition system (Fisherface method)
 %
-% See also: CREATEDATABASE, FISHERFACECORE, RECOGNITION
-
-% Original version by Amir Hossein Omidvarnia, October 2007
-%                     Email: aomidvar@ece.ut.ac.ir                  
+                         
 
 clear all
 clc
