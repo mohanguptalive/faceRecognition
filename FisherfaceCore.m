@@ -22,36 +22,33 @@ function [m_database V_PCA V_Fisher ProjectedImages_Fisher] = FisherfaceCore(T)
 %                V_Fisher               - ((P-C)x(C-1)) Largest (C-1) eigen vectors of matrix J = inv(Sw) * Sb
 %                ProjectedImages_Fisher - ((C-1)xP) Training images, which are projected onto Fisher linear space
 %
-% See also: EIG
-
-% Original version by Amir Hossein Omidvarnia, October 2007
-%                     Email: aomidvar@ece.ut.ac.ir                  
+              
 
 
 Class_number = ( size(T,2) )/2; % Number of classes (or persons)
 Class_population = 2; % Number of images in each class
 P = Class_population * Class_number; % Total number of training images
 
-%%%%%%%%%%%%%%%%%%%%%%%% calculating the mean image 
+% calculating the mean image 
 m_database = mean(T,2); 
 
-%%%%%%%%%%%%%%%%%%%%%%%% Calculating the deviation of each image from mean image
+% Calculating the deviation of each image from mean image
 A = T - repmat(m_database,1,P);
 
-%%%%%%%%%%%%%%%%%%%%%%%% Snapshot method of Eigenface algorithm
+% Snapshot method of Eigenface algorithm
 L = A'*A; % L is the surrogate of covariance matrix C=A*A'.
 [V D] = eig(L); % Diagonal elements of D are the eigenvalues for both L=A'*A and C=A*A'.
 
-%%%%%%%%%%%%%%%%%%%%%%%% Sorting and eliminating small eigenvalues
+% Sorting and eliminating small eigenvalues
 L_eig_vec = [];
 for i = 1 : P-Class_number 
     L_eig_vec = [L_eig_vec V(:,i)];
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%% Calculating the eigenvectors of covariance matrix 'C'
+% Calculating the eigenvectors of covariance matrix 'C'
 V_PCA = A * L_eig_vec; % A: centered image vectors
 
-%%%%%%%%%%%%%%%%%%%%%%%% Projecting centered image vectors onto eigenspace
+% Projecting centered image vectors onto eigenspace
 % Zi = V_PCA' * (Ti-m_database)
 ProjectedImages_PCA = [];
 for i = 1 : P
@@ -59,7 +56,7 @@ for i = 1 : P
     ProjectedImages_PCA = [ProjectedImages_PCA temp]; 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%% Calculating the mean of each class in eigenspace
+% Calculating the mean of each class in eigenspace
 m_PCA = mean(ProjectedImages_PCA,2); % Total mean in eigenspace
 m = zeros(P-Class_number,Class_number); 
 Sw = zeros(P-Class_number,P-Class_number); % Initialization os Within Scatter Matrix
