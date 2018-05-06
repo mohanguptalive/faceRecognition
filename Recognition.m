@@ -19,13 +19,9 @@ function OutputName = Recognition(TestImage, m_database, V_PCA, V_Fisher, Projec
 % 
 % Returns:       OutputName             - Name of the recognized image in the training database.
 %
-% See also: RESHAPE, STRCAT
-
-% Original version by Amir Hossein Omidvarnia, October 2007
-%                     Email: aomidvar@ece.ut.ac.ir                  
 
 Train_Number = size(ProjectedImages_Fisher,2);
-%%%%%%%%%%%%%%%%%%%%%%%% Extracting the FLD features from test image
+%Extracting the FLD features from test image
 InputImage = imread(TestImage);
 temp = InputImage(:,:,1);
 
@@ -34,7 +30,7 @@ InImage = reshape(temp',irow*icol,1);
 Difference = double(InImage)-m_database; % Centered test image
 ProjectedTestImage = V_Fisher' * V_PCA' * Difference; % Test image feature vector
 
-%%%%%%%%%%%%%%%%%%%%%%%% Calculating Euclidean distances 
+% Calculating Euclidean distances 
 % Euclidean distances between the projected test image and the projection
 % of all centered training images are calculated. Test image is
 % supposed to have minimum distance with its corresponding image in the
